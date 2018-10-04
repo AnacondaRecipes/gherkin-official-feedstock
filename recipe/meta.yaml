@@ -12,7 +12,7 @@ source:
   sha256: {{ sha256sum }}
 
 build:
-  number: 0
+  number: 1000
   script:
     - rm gherkin/count_symbols_py2.py  # [py3k and not win]
     - del gherkin\count_symbols_py2.py  # [py3k and win]
