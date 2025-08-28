@@ -6,11 +6,11 @@ package:
 
 source:
   fn: gherkin-official-{{ version }}.tar.gz
-  url: https://pypi.io/packages/source/g/gherkin-official/gherkin-official-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/g/gherkin-official/gherkin-official-{{ version }}.tar.gz
   sha256: 7f6fa7a3ceffda8bba0f56b42140cc6bae001d010fef336b5b2602252242395d
 
 build:
-  number: 1008
+  number: 1009
   script:
     - rm gherkin/count_symbols_py2.py  # [py3k and not win]
     - del gherkin\count_symbols_py2.py  # [py3k and win]
