@@ -1,20 +1,20 @@
-{% set version = "4.1.3" %}
+{% set version = "29.0.0" %}
+{% set name = "gherkin-official" %}
 
 package:
-  name: gherkin-official
+  name: {{ name }}
   version: {{ version }}
 
 source:
-  fn: gherkin-official-{{ version }}.tar.gz
-  url: https://pypi.org/packages/source/g/gherkin-official/gherkin-official-{{ version }}.tar.gz
-  sha256: 7f6fa7a3ceffda8bba0f56b42140cc6bae001d010fef336b5b2602252242395d
+  - url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name | replace('-', '_') }}-{{ version }}.tar.gz
+    sha256: dbea32561158f02280d7579d179b019160d072ce083197625e2f80a6776bb9eb
+  - url: https://github.com/cucumber/gherkin/archive/refs/tags/v{{ version }}.tar.gz
+    sha256: 52f0a6c7f0057c72e9934eba3e43a651a3791e81624191f559cdebf101b8db66
+    folder: gh_src
 
 build:
-  number: 1009
-  script:
-    - rm gherkin/count_symbols_py2.py  # [py3k and not win]
-    - del gherkin\count_symbols_py2.py  # [py3k and win]
-    - "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
@@ -26,15 +26,29 @@ requirements:
     - nose
 
 test:
+  source_files:
+    - gh_src/python
   imports:
     - gherkin
+  requires:
+    - pip
+    - pytest >= 5.0
+  commands:
+    - pip check
+    - cd gh_src/python
+    - pytest -vvv test
 
 about:
-  home: https://github.com/cucumber/gherkin-python
+  home: https://github.com/cucumber/gherkin
   license: MIT
-  # xref: https://github.com/cucumber/gherkin-python/pull/7
-  license_file: '{{ environ['RECIPE_DIR'] }}/LICENSE.txt'
+  license_file: LICENSE
+  license_family: MIT
   summary: Gherkin parser/compiler for Python
+  description: |
+    Gherkin uses a set of special keywords to give structure and meaning to executable specifications. 
+    Each keyword is translated to many spoken languages; in this reference we'll use English.
+  dev_url: https://github.com/cucumber/gherkin
+  doc_url: https://cucumber.io/docs/gherkin
 
 extra:
   recipe-maintainers:
