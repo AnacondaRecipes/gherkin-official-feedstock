@@ -23,7 +23,6 @@ requirements:
     - pip
   run:
     - python
-    - nose
 
 test:
   source_files:
